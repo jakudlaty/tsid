@@ -1,0 +1,14 @@
+[package]
+name = "tsid"
+version = "0.1.0"
+edition = "2021"
+authors = ["Maciej Stępyra <jakudlaty@gmail.com>"]
+keywords = ["tsid", "sortable", "identifier", "generator"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/jakudlaty/tsid/"
+license-file = "LICENSE"
+description = "A Rust library for generating Time-Sorted Unique Identifiers"
+
+
+[dependencies]
