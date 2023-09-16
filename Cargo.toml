@@ -11,3 +11,6 @@ description = "A Rust library for generating Time-Sorted Unique Identifiers"
 
 
 [dependencies]
+
+[package.metadata.release]
+allow-branch = ["main"]

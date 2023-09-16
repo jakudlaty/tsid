@@ -1,7 +1,9 @@
-pub struct TsidFactory {}
+pub struct TsidFactory {
+    node_bits: u8,
+}
 
 pub struct TsidFactoryBuilder {
-    node_bits: u8
+    node_bits: u8,
 }
 
 impl TsidFactoryBuilder {
@@ -15,9 +17,9 @@ impl TsidFactoryBuilder {
         }
     }
 
-    pub fn build<T>(self) -> TsidFactory {
+    pub fn build(self) -> TsidFactory {
         TsidFactory {
-
+            node_bits: self.node_bits,
         }
     }
 }
@@ -30,6 +32,18 @@ impl Default for TsidFactoryBuilder {
     }
 }
 
-
 pub struct TSID {}
 
+#[cfg(test)]
+mod tests {
+    use crate::TsidFactoryBuilder;
+
+    #[test]
+    fn builder_should_set_node_bits() {
+        let factory_under_test = TsidFactoryBuilder::new()
+            .with_node_bits(8)
+            .build();
+
+        assert_eq!(8, factory_under_test.node_bits);
+    }
+}
