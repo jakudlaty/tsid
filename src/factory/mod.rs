@@ -15,7 +15,7 @@ pub struct TsidFactory {
     node_bits: u8,
     counter_bits: u8,
     counter_mask: u64,
-    node_mask: u64,
+    node_mask: u32,
     last_time_value: u128,
     counter: u64,
     node: u32,
@@ -44,7 +44,7 @@ impl TsidFactory {
     pub fn with_node_bits(node_bits: u8, node: u32) -> Self {
         let counter_bits: u8 = RANDOM_BITS - node_bits;
         let counter_mask = RANDOM_MASK >> node_bits;
-        let node_mask = RANDOM_MASK >> counter_bits;
+        let node_mask = (RANDOM_MASK >> counter_bits) as u32;
 
         let mut rng = rand::thread_rng();
         let counter = rng.next_u64() & counter_mask;
@@ -65,7 +65,7 @@ impl TsidFactory {
     // naive implementation without thread safety
     pub fn create(&mut self) -> TSID {
         let time = self.get_time_and_advance_counter();
-        let node_val: u64 = (self.node << self.counter_bits) as u64;
+        let node_val: u64 = (self.node & self.node_mask << self.counter_bits) as u64;
         let time_val: u64 = (time << RANDOM_BITS) as u64;
         let counter_val = self.counter & self.counter_mask;
         let number = time_val | node_val | counter_val;

@@ -1,5 +1,3 @@
-use std::str::Chars;
-
 pub struct TSID {
     number: u64,
 }
