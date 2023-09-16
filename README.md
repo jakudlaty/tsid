@@ -7,6 +7,7 @@ This library is in development. Not usable yet.
 
 Goals:
 - [x] Generate TSID with simple, naive implementation
+- [ ] Add basic tests to check compatibility
 - [ ] Generate TSID with performance comparable to java library
 - [ ] Publish first usable version to crates.io
 - [ ] GitHub actions workflow to CI
