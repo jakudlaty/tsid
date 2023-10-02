@@ -1,7 +1,7 @@
+use crate::tsid::TSID;
+use rand::RngCore;
 use std::ops::Add;
 use std::time::{Duration, SystemTime};
-use rand::RngCore;
-use crate::tsid::TSID;
 
 const TIME_BITS: u8 = 42;
 const RANDOM_BITS: u8 = 64 - TIME_BITS;
@@ -20,7 +20,6 @@ pub struct TsidFactory {
     counter: u64,
     node: u32,
 }
-
 
 impl Default for TsidFactory {
     #[doc = "Create default TsidFactory with `node_bits: 0`"]
@@ -61,7 +60,6 @@ impl TsidFactory {
         }
     }
 
-
     // naive implementation without thread safety
     pub fn create(&mut self) -> TSID {
         let time = self.get_time_and_advance_counter();
@@ -72,16 +70,29 @@ impl TsidFactory {
         TSID::new(number)
     }
 
+    pub fn node_bits(&self) -> u8 {
+        self.node_bits
+    }
+
+    pub fn counter_bits(&self) -> u8 {
+        self.counter_bits
+    }
+
+    pub fn node(&self) -> u32 {
+        self.node
+    }
+
     fn get_time_and_advance_counter(&mut self) -> u128 {
         let mut rng = rand::thread_rng();
         let mut time_millis = Self::get_time_millis_in_tsid_epoch();
 
         if time_millis <= self.last_time_value {
             self.counter += 1;
+            let mut carry = 0;
             if self.counter >> self.counter_bits > 0 {
-                //carry
-                time_millis += 1;
+                carry = 1;
             }
+            time_millis = self.last_time_value + carry;
         } else {
             self.counter = rng.next_u64();
         }
@@ -103,7 +114,10 @@ impl TsidFactory {
 
 #[cfg(test)]
 mod tests {
-    use crate::factory::{TIME_BITS, TsidFactory};
+    use crate::factory::{TsidFactory, TIME_BITS};
+    use crate::TSID;
+    use std::collections::HashSet;
+    use std::time::{Duration, Instant};
 
     #[test]
     fn builder_should_set_all_masks_for_8node_bits_version() {
@@ -114,7 +128,10 @@ mod tests {
         assert_eq!(14, factory_under_test.counter_bits);
         assert_eq!(0x3fff, factory_under_test.counter_mask);
         assert_eq!(0xff, factory_under_test.node_mask);
-        assert_eq!(64, TIME_BITS + factory_under_test.counter_bits + factory_under_test.node_bits)
+        assert_eq!(
+            64,
+            TIME_BITS + factory_under_test.counter_bits + factory_under_test.node_bits
+        )
     }
 
     #[test]
@@ -126,13 +143,73 @@ mod tests {
         assert_eq!(22, factory_under_test.counter_bits);
         assert_eq!(0x3fffff, factory_under_test.counter_mask);
         assert_eq!(0x0, factory_under_test.node_mask);
-        assert_eq!(64, TIME_BITS + factory_under_test.counter_bits + factory_under_test.node_bits)
+        assert_eq!(
+            64,
+            TIME_BITS + factory_under_test.counter_bits + factory_under_test.node_bits
+        )
     }
 
     #[test]
     fn create_tsid() {
         let mut factory_under_test = TsidFactory::with_node_bits(8, 1);
         let _tsid = factory_under_test.create();
-        println!("{}", _tsid.to_string())
+    }
+
+    #[test]
+    fn check_for_collisions() {
+        let mut factory_under_test = TsidFactory::with_node_bits(8, 0);
+        let test_duration = Duration::from_millis(100);
+        let max_ids_count = 100000;
+
+        let mut uniq_ids: HashSet<TSID> = HashSet::new();
+
+        let start = Instant::now();
+        while (start.elapsed() < test_duration) && (uniq_ids.len() < max_ids_count) {
+            let id = factory_under_test.create();
+            assert!(!uniq_ids.contains(&id), "Set contains duplicates!");
+            uniq_ids.insert(id);
+        }
+    }
+
+    #[test]
+    fn id_should_be_incremental() {
+        let mut factory_under_test = TsidFactory::with_node_bits(8, 0);
+        let test_duration = Duration::from_millis(100);
+        let mut max_ids_count = 1000000;
+        let mut last = factory_under_test.create();
+
+        let start = Instant::now();
+        while (start.elapsed() < test_duration) && (max_ids_count > 0) {
+            let id = factory_under_test.create();
+            assert!(
+                last < id,
+                "Id is not incremental! for {}, {}",
+                last.number(),
+                id.number()
+            );
+            last = id;
+            max_ids_count -= 1;
+        }
+    }
+
+    #[test]
+    fn timer_should_be_incremental() {
+        let mut factory_under_test = TsidFactory::with_node_bits(8, 0);
+        let mut max_sample_count = 100000;
+        let max_duration = Duration::from_millis(100);
+        let mut last = factory_under_test.get_time_and_advance_counter();
+
+        let start = Instant::now();
+        while max_sample_count > 0 && start.elapsed() < max_duration {
+            let next = factory_under_test.get_time_and_advance_counter();
+            assert!(
+                last <= next,
+                "Timer implementation is non monotonic {}, {}",
+                last,
+                next
+            );
+            last = next;
+            max_sample_count -= 1;
+        }
     }
 }
