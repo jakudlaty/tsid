@@ -1,6 +1,6 @@
 [package]
 name = "tsid"
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 authors = ["Maciej Stępyra <jakudlaty@gmail.com>"]
 keywords = ["tsid", "sortable", "identifier", "generator"]
