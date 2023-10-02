@@ -1,4 +1,9 @@
-use std::fmt::{Debug, Display, Formatter};
+#[cfg(feature = "display")]
+use std::fmt::{Display, Formatter};
+
+#[cfg(feature = "debug")]
+use std::fmt::{Debug};
+
 
 #[derive(Hash, Eq, PartialEq, PartialOrd)]
 pub struct TSID {
@@ -20,6 +25,7 @@ impl TSID {
     }
 }
 
+#[cfg(feature = "display")]
 impl Display for TSID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut chars = String::with_capacity(13);
@@ -43,6 +49,7 @@ impl Display for TSID {
     }
 }
 
+#[cfg(feature = "debug")]
 impl Debug for TSID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_str(self.to_string().as_str())
@@ -75,11 +82,12 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "display")]
     fn should_implement_ordering() {
         let id1 = TSID::new(0);
         let id2 = TSID::new(10);
 
-        assert_ne!(id1, id2);
+        assert!(id1 != id2, "Ids shouldnt be equal {} {}", id1, id2);
         assert!(
             id1 < id2,
             "Id2:{} should be greater than Id1:{} because it was created later",
@@ -89,6 +97,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "display")]
     fn string_representations_should_be_also_ordered() {
         let id1 = TSID::new(9);
         let id2 = TSID::new(10);

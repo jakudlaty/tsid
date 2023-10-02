@@ -70,6 +70,18 @@ impl TsidFactory {
         TSID::new(number)
     }
 
+    pub fn node_bits(&self) -> u8 {
+        self.node_bits
+    }
+
+    pub fn counter_bits(&self) -> u8 {
+        self.counter_bits
+    }
+
+    pub fn node(&self) -> u32 {
+        self.node
+    }
+
     fn get_time_and_advance_counter(&mut self) -> u128 {
         let mut rng = rand::thread_rng();
         let mut time_millis = Self::get_time_millis_in_tsid_epoch();
@@ -140,8 +152,7 @@ mod tests {
     #[test]
     fn create_tsid() {
         let mut factory_under_test = TsidFactory::with_node_bits(8, 1);
-        let tsid = factory_under_test.create();
-        println!("{}", tsid.to_string())
+        let _tsid = factory_under_test.create();
     }
 
     #[test]
