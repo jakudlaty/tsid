@@ -12,6 +12,9 @@ description = "A Rust library for generating Time-Sorted Unique Identifiers"
 [dependencies]
 rand = "0.8"
 
+[dev-dependencies]
+criterion = "0.5.1"
+
 [features]
 default = ["display", "debug"]
 debug = ["display"]
@@ -20,3 +23,7 @@ display = []
 
 [package.metadata.release]
 allow-branch = ["main"]
+
+[[bench]]
+name = "benchmarks"
+harness = false

@@ -87,7 +87,6 @@ mod tests {
         let id1 = TSID::new(0);
         let id2 = TSID::new(10);
 
-        assert!(id1 != id2, "Ids shouldnt be equal {} {}", id1, id2);
         assert!(
             id1 < id2,
             "Id2:{} should be greater than Id1:{} because it was created later",
