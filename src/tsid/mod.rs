@@ -1,8 +1,16 @@
+pub mod conversions;
+
 #[cfg(feature = "display")]
-use std::fmt::{Display, Formatter};
+pub mod display;
 
 #[cfg(feature = "debug")]
-use std::fmt::{Debug};
+pub mod debug;
+
+#[cfg(feature = "bson")]
+pub mod bson;
+
+#[cfg(feature = "serde")]
+pub mod serde;
 
 
 #[derive(Hash, Eq, PartialEq, PartialOrd)]
@@ -25,52 +33,10 @@ impl TSID {
     }
 }
 
-#[cfg(feature = "display")]
-impl Display for TSID {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let mut chars = String::with_capacity(13);
-        let number = self.number as usize;
-
-        chars.push(ALPHABET[(number >> 60) & 0b11111]);
-        chars.push(ALPHABET[(number >> 55) & 0b11111]);
-        chars.push(ALPHABET[(number >> 50) & 0b11111]);
-        chars.push(ALPHABET[(number >> 45) & 0b11111]);
-        chars.push(ALPHABET[(number >> 40) & 0b11111]);
-        chars.push(ALPHABET[(number >> 35) & 0b11111]);
-        chars.push(ALPHABET[(number >> 30) & 0b11111]);
-        chars.push(ALPHABET[(number >> 25) & 0b11111]);
-        chars.push(ALPHABET[(number >> 20) & 0b11111]);
-        chars.push(ALPHABET[(number >> 15) & 0b11111]);
-        chars.push(ALPHABET[(number >> 10) & 0b11111]);
-        chars.push(ALPHABET[(number >> 5) & 0b11111]);
-        chars.push(ALPHABET[number & 0b11111]);
-
-        return f.write_str(chars.as_str());
-    }
-}
-
-#[cfg(feature = "debug")]
-impl Debug for TSID {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.to_string().as_str())
-    }
-}
-
-impl Into<u64> for TSID {
-    fn into(self) -> u64 {
-        self.number
-    }
-}
-
-impl From<u64> for TSID {
-    fn from(value: u64) -> Self {
-        TSID::new(value)
-    }
-}
 
 #[cfg(test)]
 mod tests {
-    use crate::TSID;
+    use crate::{TSID};
 
     #[test]
     fn tsid_should_have_small_size() {
@@ -108,4 +74,19 @@ mod tests {
             id1
         );
     }
+
+    #[test]
+    #[cfg(feature = "serde")]
+    fn serialize_to_human_readable_form() {
+        let id1 = TSID::new(496830748901259172);
+        println!("{}", serde_json::to_string_pretty(&id1).expect("Unable to serialize"))
+    }
+
+    #[test]
+    #[cfg(feature = "bson")]
+    fn serialize_to_bson() {
+        let id1 = TSID::new(496830748901259172);
+        println!("{}", bson::doc! {"id": id1 })
+    }
 }
+

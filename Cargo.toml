@@ -11,18 +11,27 @@ description = "A Rust library for generating Time-Sorted Unique Identifiers"
 
 [dependencies]
 rand = "0.8"
+serde = { version = "1", optional = true }
+bson = { version = "2.7", optional = true }
 
 [dev-dependencies]
 criterion = "0.5.1"
+serde_json = { version = "1" }
+bson = "2.7.0"
 
 [features]
-default = ["display", "debug"]
+default = ["display", "debug", "bson", "serde"]
 debug = ["display"]
 display = []
-
+serde = ["dep:serde", "display"]
+bson = ["dep:bson"]
 
 [package.metadata.release]
 allow-branch = ["main"]
+pre-release-hook = "checks.sh"
+
+[package.metadata]
+msrv = "1.67.1"
 
 [[bench]]
 name = "benchmarks"
