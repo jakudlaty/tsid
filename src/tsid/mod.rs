@@ -12,7 +12,6 @@ pub mod bson;
 #[cfg(feature = "serde")]
 pub mod serde;
 
-
 #[derive(Hash, Eq, PartialEq, PartialOrd)]
 pub struct TSID {
     number: u64,
@@ -33,10 +32,9 @@ impl TSID {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
-    use crate::{TSID};
+    use crate::TSID;
 
     #[test]
     fn tsid_should_have_small_size() {
@@ -79,7 +77,10 @@ mod tests {
     #[cfg(feature = "serde")]
     fn serialize_to_human_readable_form() {
         let id1 = TSID::new(496830748901259172);
-        println!("{}", serde_json::to_string_pretty(&id1).expect("Unable to serialize"))
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&id1).expect("Unable to serialize")
+        )
     }
 
     #[test]
@@ -89,4 +90,3 @@ mod tests {
         println!("{}", bson::doc! {"id": id1 })
     }
 }
-

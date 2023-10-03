@@ -1,6 +1,6 @@
-use std::fmt::{Display, Formatter};
-use crate::TSID;
 use crate::tsid::ALPHABET;
+use crate::TSID;
+use std::fmt::{Display, Formatter};
 
 impl Display for TSID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
@@ -27,7 +27,7 @@ impl Display for TSID {
 
 #[cfg(test)]
 mod tests {
-    use crate::{TSID};
+    use crate::TSID;
 
     #[test]
     fn string_representations_should_be_also_ordered() {
@@ -41,7 +41,4 @@ mod tests {
             id1
         );
     }
-
-
 }
-

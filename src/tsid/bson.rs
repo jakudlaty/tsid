@@ -1,5 +1,5 @@
-use bson::Bson;
 use crate::TSID;
+use bson::Bson;
 
 impl From<TSID> for Bson {
     fn from(value: TSID) -> Self {
@@ -9,7 +9,7 @@ impl From<TSID> for Bson {
 
 #[cfg(test)]
 mod tests {
-    use crate::{TSID};
+    use crate::TSID;
 
     #[test]
     fn serialize_to_bson() {

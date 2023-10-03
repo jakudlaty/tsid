@@ -13,7 +13,7 @@ impl From<u64> for TSID {
 
 #[cfg(test)]
 mod tests {
-    use crate::{TSID};
+    use crate::TSID;
 
     #[test]
     #[cfg(feature = "display")]

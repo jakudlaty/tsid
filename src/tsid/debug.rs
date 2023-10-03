@@ -1,5 +1,5 @@
-use std::fmt::{Debug, Formatter};
 use crate::TSID;
+use std::fmt::{Debug, Formatter};
 
 #[cfg(feature = "debug")]
 impl Debug for TSID {
@@ -10,7 +10,7 @@ impl Debug for TSID {
 
 #[cfg(test)]
 mod tests {
-    use crate::{TSID};
+    use crate::TSID;
 
     #[test]
     fn should_have_debug_representation() {
