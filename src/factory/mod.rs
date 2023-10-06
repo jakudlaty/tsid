@@ -51,7 +51,7 @@ impl TsidFactory {
         let counter = rng.next_u64() & counter_mask;
         let last_time_value = Self::get_time_millis_in_tsid_epoch();
         let node_val: u64 = (node << counter_bits) as u64;
-        
+
         Self {
             node_bits,
             counter_bits,
@@ -60,7 +60,7 @@ impl TsidFactory {
             last_time_value,
             counter,
             node,
-            node_val
+            node_val,
         }
     }
 

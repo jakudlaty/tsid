@@ -1,6 +1,5 @@
 use crate::TSID;
 use bson::Bson;
-use crate::tsid::TsidError;
 
 impl From<TSID> for Bson {
     fn from(value: TSID) -> Self {
@@ -11,7 +10,6 @@ impl From<TSID> for Bson {
         return Bson::String(value.to_string());
     }
 }
-
 
 #[cfg(test)]
 mod tests {

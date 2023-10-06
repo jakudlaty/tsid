@@ -1,5 +1,5 @@
-use std::fmt::Error;
 use phf::phf_map;
+use std::fmt::Error;
 
 pub mod conversions;
 
@@ -100,12 +100,12 @@ impl TSID {
 
 #[derive(Debug)]
 pub enum ParseErrorReason {
-    InvalidLength
+    InvalidLength,
 }
 
 #[derive(Debug)]
 pub enum TsidError {
-    ParseError(ParseErrorReason)
+    ParseError(ParseErrorReason),
 }
 
 impl TryFrom<&str> for TSID {
@@ -135,7 +135,6 @@ impl TryFrom<&str> for TSID {
         return Ok(TSID::new(number));
     }
 }
-
 
 #[cfg(test)]
 mod tests {
