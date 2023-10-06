@@ -14,6 +14,8 @@ rand = "0.8"
 serde = { version = "1", optional = true }
 bson = { version = "2.7", optional = true }
 lazy_static = "1.4.0"
+phf = { version = "0.11.2", features = ["macros"] }
+
 
 [dev-dependencies]
 criterion = "0.5.1"
@@ -21,11 +23,14 @@ serde_json = { version = "1" }
 bson = "2.7.0"
 
 [features]
-default = ["display", "debug", "bson", "serde"]
+default = ["display", "debug", "bson", "serde", "bson_as_string", "serde_as_string"]
 debug = ["display"]
 display = []
 serde = ["dep:serde", "display"]
 bson = ["dep:bson"]
+bson_as_string = ["bson"]
+serde_as_string = ["serde"]
+
 
 [package.metadata.release]
 allow-branch = ["main"]

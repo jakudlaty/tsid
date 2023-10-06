@@ -2,11 +2,22 @@ use std::fmt::Formatter;
 use crate::TSID;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde::de::{EnumAccess, Error, MapAccess, SeqAccess, Visitor};
+use crate::tsid::{ParseErrorReason, TsidError};
 
 impl Serialize for TSID {
+    #[cfg(feature = "serde_as_string")]
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
+        where
+            S: Serializer,
+    {
+        serializer.serialize_str(self.to_string().as_str())
+    }
+
+
+    #[cfg(not(feature = "serde_as_string"))]
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+        where
+            S: Serializer,
     {
         if serializer.is_human_readable() {
             serializer.serialize_str(self.to_string().as_str())
@@ -22,13 +33,13 @@ impl<'de> Deserialize<'de> for TSID {
         where
             D: Deserializer<'de>,
     {
-        deserializer.deserialize_any(TSIDIntVisitor)
+        deserializer.deserialize_any(TSIDVisitor)
     }
 }
 
-struct TSIDIntVisitor;
+struct TSIDVisitor;
 
-impl<'de> Visitor<'de> for TSIDIntVisitor {
+impl<'de> Visitor<'de> for TSIDVisitor {
     type Value = TSID;
 
     fn expecting(&self, formatter: &mut Formatter) -> std::fmt::Result {
@@ -45,16 +56,10 @@ impl<'de> Visitor<'de> for TSIDIntVisitor {
 
 
     fn visit_str<E>(self, v: &str) -> Result<Self::Value, E> where E: Error {
-        todo!()
+        let res = TSID::try_from(v);
+        Self::convert_error(v, res)
     }
 
-    fn visit_borrowed_str<E>(self, v: &'de str) -> Result<Self::Value, E> where E: Error {
-        todo!()
-    }
-
-    fn visit_string<E>(self, v: String) -> Result<Self::Value, E> where E: Error {
-        todo!()
-    }
 
     fn visit_bytes<E>(self, v: &[u8]) -> Result<Self::Value, E> where E: Error {
         todo!()
@@ -67,16 +72,17 @@ impl<'de> Visitor<'de> for TSIDIntVisitor {
     fn visit_byte_buf<E>(self, v: Vec<u8>) -> Result<Self::Value, E> where E: Error {
         todo!()
     }
+}
 
-    fn visit_none<E>(self) -> Result<Self::Value, E> where E: Error {
-        todo!()
-    }
-
-    fn visit_some<D>(self, deserializer: D) -> Result<Self::Value, D::Error> where D: Deserializer<'de> {
-        todo!()
-    }
-
-    fn visit_unit<E>(self) -> Result<Self::Value, E> where E: Error {
-        todo!()
+impl TSIDVisitor {
+    fn convert_error<E>(v: &str, res: Result<TSID, TsidError>) -> Result<TSID, E> where E: Error {
+        match res {
+            Ok(parsed) => Ok(parsed),
+            Err(e) => {
+                match e {
+                    TsidError::ParseError(ParseErrorReason::InvalidLength) => Err(Error::invalid_length(v.len(), &"13"))
+                }
+            }
+        }
     }
 }
