@@ -12,7 +12,7 @@ pub mod bson;
 #[cfg(feature = "serde")]
 pub mod serde;
 
-#[derive(Hash, Eq, PartialEq, PartialOrd)]
+#[derive(Hash, Eq, PartialEq, PartialOrd, Copy, Clone)]
 pub struct TSID {
     number: u64,
 }
