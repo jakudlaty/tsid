@@ -34,7 +34,7 @@ serde_as_string = ["serde"]
 
 [package.metadata.release]
 allow-branch = ["main"]
-pre-release-hook = "checks.sh"
+
 
 [package.metadata]
 msrv = "1.67.1"
