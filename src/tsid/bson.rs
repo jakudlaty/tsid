@@ -3,7 +3,11 @@ use bson::Bson;
 
 impl From<TSID> for Bson {
     fn from(value: TSID) -> Self {
-        Bson::Int64(value.number as i64)
+        #[cfg(not(feature = "bson_as_string"))]
+        return Bson::Int64(value.number as i64);
+
+        #[cfg(feature = "bson_as_string")]
+        return Bson::String(value.to_string());
     }
 }
 

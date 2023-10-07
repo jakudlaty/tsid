@@ -9,10 +9,10 @@ Goals:
 - [x] Generate TSID with simple, naive implementation
 - [ ] Add basic tests to check compatibility
 - [ ] Generate TSID with performance comparable to java library
-- [ ] Publish first usable version to crates.io
+- [x] Publish first usable version to crates.io
 - [ ] GitHub actions workflow to CI
-- [ ] Serde serialization
-- [ ] Thread safety
+- [x] Serde serialization
+- [x] Thread safety
 
 ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
