@@ -27,7 +27,7 @@ default = ["display", "debug", "bson", "serde", "bson_as_string", "serde_as_stri
 debug = ["display"]
 display = []
 serde = ["dep:serde", "display"]
-bson = ["dep:bson"]
+bson = ["dep:bson", "display"]
 bson_as_string = ["bson"]
 serde_as_string = ["serde"]
 

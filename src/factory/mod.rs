@@ -15,7 +15,7 @@ pub struct TsidFactory {
     node_bits: u8,
     counter_bits: u8,
     counter_mask: u64,
-    node_mask: u32,
+    _node_mask: u32,
     last_time_value: u128,
     counter: u64,
     node: u32,
@@ -56,7 +56,7 @@ impl TsidFactory {
             node_bits,
             counter_bits,
             counter_mask,
-            node_mask,
+            _node_mask: node_mask,
             last_time_value,
             counter,
             node,
@@ -130,7 +130,7 @@ mod tests {
         assert_eq!(8, factory_under_test.node_bits);
         assert_eq!(14, factory_under_test.counter_bits);
         assert_eq!(0x3fff, factory_under_test.counter_mask);
-        assert_eq!(0xff, factory_under_test.node_mask);
+        assert_eq!(0xff, factory_under_test._node_mask);
         assert_eq!(
             64,
             TIME_BITS + factory_under_test.counter_bits + factory_under_test.node_bits
@@ -145,7 +145,7 @@ mod tests {
         assert_eq!(0, factory_under_test.node_bits);
         assert_eq!(22, factory_under_test.counter_bits);
         assert_eq!(0x3fffff, factory_under_test.counter_mask);
-        assert_eq!(0x0, factory_under_test.node_mask);
+        assert_eq!(0x0, factory_under_test._node_mask);
         assert_eq!(
             64,
             TIME_BITS + factory_under_test.counter_bits + factory_under_test.node_bits

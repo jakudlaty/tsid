@@ -1,5 +1,4 @@
 use phf::phf_map;
-use std::fmt::Error;
 
 pub mod conversions;
 
@@ -115,7 +114,7 @@ impl TryFrom<&str> for TSID {
         if value.len() != 13 {
             return Err(TsidError::ParseError(ParseErrorReason::InvalidLength));
         }
-        let mut chars = value.as_bytes();
+        let chars = value.as_bytes();
 
         let mut number = 0u64;
         number |= REVERSE[&chars[0x00]] << 60;

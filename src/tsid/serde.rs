@@ -1,7 +1,6 @@
 use crate::tsid::{ParseErrorReason, TsidError};
 use crate::TSID;
-use serde::de::{EnumAccess, Error, MapAccess, SeqAccess, Visitor};
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{de::Error, de::Visitor, Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::Formatter;
 
 impl Serialize for TSID {
@@ -64,27 +63,6 @@ impl<'de> Visitor<'de> for TSIDVisitor {
     {
         let res = TSID::try_from(v);
         Self::convert_error(v, res)
-    }
-
-    fn visit_bytes<E>(self, v: &[u8]) -> Result<Self::Value, E>
-    where
-        E: Error,
-    {
-        todo!()
-    }
-
-    fn visit_borrowed_bytes<E>(self, v: &'de [u8]) -> Result<Self::Value, E>
-    where
-        E: Error,
-    {
-        todo!()
-    }
-
-    fn visit_byte_buf<E>(self, v: Vec<u8>) -> Result<Self::Value, E>
-    where
-        E: Error,
-    {
-        todo!()
     }
 }
 
