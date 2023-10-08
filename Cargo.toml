@@ -23,7 +23,7 @@ serde_json = { version = "1" }
 bson = "2.7.0"
 
 [features]
-default = ["display", "debug", "bson", "serde", "bson_as_string", "serde_as_string"]
+default = ["display", "debug"]
 debug = ["display"]
 display = []
 serde = ["dep:serde", "display"]
