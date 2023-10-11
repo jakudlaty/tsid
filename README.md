@@ -1,8 +1,6 @@
 # tsid
 TSID generator for rust, this library is reimplementation of java [tsid-creator](https://github.com/f4b6a3/tsid-creator/) created by Fabio Lima
 
-This library is in development. Not usable yet.
-
 ![example workflow](https://github.com/jakudlaty/tsid/actions/workflows/rust.yml/badge.svg)
 
 Goals:
@@ -10,7 +8,7 @@ Goals:
 - [ ] Add basic tests to check compatibility
 - [ ] Benchmarks (compare the speed to java library)
 - [x] Publish first usable version to crates.io
-- [ ] GitHub actions workflow to CI
+- [x] GitHub actions workflow to CI
 - [x] Serde serialization
 - [x] Thread safety
 
