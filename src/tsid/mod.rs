@@ -1,8 +1,6 @@
 use phf::phf_map;
 
 pub mod conversions;
-
-#[cfg(feature = "display")]
 pub mod display;
 
 #[cfg(feature = "debug")]
@@ -149,7 +147,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "display")]
     fn should_implement_ordering() {
         let id1 = TSID::new(0);
         let id2 = TSID::new(10);
@@ -163,7 +160,6 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "display")]
     fn string_representations_should_be_also_ordered() {
         let id1 = TSID::new(9);
         let id2 = TSID::new(10);

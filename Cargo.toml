@@ -1,6 +1,6 @@
 [package]
 name = "tsid"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Maciej Stępyra <jakudlaty@gmail.com>"]
 keywords = ["tsid", "sortable", "identifier", "generator"]
@@ -12,7 +12,7 @@ description = "A Rust library for generating Time-Sorted Unique Identifiers"
 [dependencies]
 rand = "0.8"
 serde = { version = "1", optional = true }
-bson = { version = "2.7", optional = true }
+bson = { version = "2", optional = true }
 lazy_static = "1.4.0"
 phf = { version = "0.11.2", features = ["macros"] }
 
@@ -23,11 +23,8 @@ serde_json = { version = "1" }
 bson = "2.7.0"
 
 [features]
-default = ["display", "debug"]
-debug = ["display"]
-display = []
-serde = ["dep:serde", "display"]
-bson = ["dep:bson", "display"]
+default = ["debug"]
+debug = []
 bson_as_string = ["bson"]
 serde_as_string = ["serde"]
 
