@@ -33,6 +33,24 @@ jobs:
         run: cargo check
 
       - name: Tests with all features
-        run: cargo +1.67.1 test --all-features
+        run: cargo test --all-features
         timeout-minutes: 10
 
+
+  msrv:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust_version: ["1.67.1", "1.68.2", "1.71"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install rust ${{ matrix.rust_version }}
+        run: rustup toolchain install ${{ matrix.rust_version }}
+        timeout-minutes: 10
+
+
+      - name: Tests with all features
+        run: cargo +${{ matrix.rust_version }} test --all-features
+        timeout-minutes: 10
