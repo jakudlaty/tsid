@@ -41,12 +41,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rust_version: ["1.67.1", "1.70.1"]
+        rust_version: ["1.67.1", "nightly", "stable"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install latest nightly
+      - name: Install rust toolchain ${{ matrix.rust_version }}
         uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.rust_version }}
