@@ -72,7 +72,7 @@ fn read_env() -> EnvConfig {
 /// - Maximum counter: ```2^(22 - node_bits)```
 pub fn create_tsid() -> TSID {
     let mut guard = SHARED_FACTORIES.default_shared_factory.lock().unwrap();
-    return guard.create();
+    guard.create()
 }
 
 /// Returns a new TSID
@@ -83,7 +83,7 @@ pub fn create_tsid() -> TSID {
 /// - Maximum counter *16,384* (maximum TSIDs mer ms mer node)
 pub fn create_tsid_256() -> TSID {
     let mut guard = SHARED_FACTORIES.shared_factory_8.lock().unwrap();
-    return guard.create();
+    guard.create()
 }
 
 /// Returns a new TSID
@@ -95,7 +95,7 @@ pub fn create_tsid_256() -> TSID {
 ///
 pub fn create_tsid_1024() -> TSID {
     let mut guard = SHARED_FACTORIES.shared_factory_10.lock().unwrap();
-    return guard.create();
+    guard.create()
 }
 
 /// Returns a new TSID
@@ -106,17 +106,17 @@ pub fn create_tsid_1024() -> TSID {
 /// - Maximum counter *1024* (maximum TSIDs mer ms mer node)
 pub fn create_tsid_4096() -> TSID {
     let mut guard = SHARED_FACTORIES.shared_factory_12.lock().unwrap();
-    return guard.create();
+    guard.create()
 }
 
 /// Returns the NODE_ID parsed from env variable or the random one
 /// which was used to create default factory
 pub fn get_node_id() -> u32 {
-    return SHARED_FACTORIES.node_id;
+    SHARED_FACTORIES.node_id
 }
 
 /// Returns the NODE_BITS parsed from env variable or the default value = 8
 /// which was used to create default factory
 pub fn get_node_bits() -> u8 {
-    return SHARED_FACTORIES.node_bits;
+    SHARED_FACTORIES.node_bits
 }

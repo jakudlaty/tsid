@@ -1,8 +1,8 @@
 use crate::tsid::{ParseErrorReason, TsidError, REVERSE, TSID};
 
-impl Into<u64> for TSID {
-    fn into(self) -> u64 {
-        self.number
+impl From<TSID> for u64 {
+    fn from(val: TSID) -> Self {
+        val.number
     }
 }
 
@@ -48,6 +48,6 @@ impl TryFrom<&str> for TSID {
         number |= REVERSE[&chars[0x0b]] << 5;
         number |= REVERSE[&chars[0x0c]];
 
-        return Ok(TSID::new(number));
+        Ok(TSID::new(number))
     }
 }

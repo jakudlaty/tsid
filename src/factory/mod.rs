@@ -95,10 +95,10 @@ impl TsidFactory {
         } else {
             self.counter = rng.next_u64();
         }
-        self.counter = self.counter & self.counter_mask;
+        self.counter &= self.counter_mask;
         self.last_time_value = time_millis;
 
-        return time_millis;
+        time_millis
     }
 
     fn get_time_millis_in_tsid_epoch() -> u128 {
