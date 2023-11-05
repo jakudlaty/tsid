@@ -3,7 +3,7 @@ TSID generator for rust, this library is reimplementation of java [tsid-creator]
 
 ![example workflow](https://github.com/jakudlaty/tsid/actions/workflows/rust.yml/badge.svg)
 
-Goals:
+Implementation status:
 - [x] Generate TSID with simple, naive implementation
 - [ ] Add basic tests to check compatibility
 - [ ] Benchmarks (compare the speed to java library)
@@ -19,13 +19,16 @@ Goals:
 ```rust
 use tsid::create_tsid;
 
-let tsid = create_tsid()
+fn main() {
+    let tsid = create_tsid();
+}
 ```
 
 Crate features:
-- ```display``` - add Display trait to TSID
-- ```debug``` - adds debug trait to TSID
-- ```serde``` - adds serde dependency and serialization/deserialization
-- ```serde_as_string``` - tells serde to serialize TSID as string (disabling this feature means that serde will serialize to string for human readable formats ant tu u64 otherwise)
-- ```bson``` - adds From bson conversion
 - ```bson_as_string``` - the same as for serde
+- ```bson``` - adds From bson conversion
+- ```chrono``` - Allow extracting DateTime from TDIS
+- ```debug``` - adds debug trait to TSID
+- ```display``` - add Display trait to TSID
+- ```serde_as_string``` - tells serde to serialize TSID as string (disabling this feature means that serde will serialize to string for human readable formats ant tu u64 otherwise)
+- ```serde``` - adds serde dependency and serialization/deserialization
