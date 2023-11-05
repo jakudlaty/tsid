@@ -38,13 +38,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache cargo
+        id: cache-primes
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/registry/src
+          key: cargo-registry-${{ matrix.rust_version }}
+
       - name: Install rust toolchain ${{ matrix.rust_version }}
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ matrix.rust_version }}
+        timeout-minutes: 10
 
       - name: Check
         run: cargo +${{ matrix.rust_version }} check
+        timeout-minutes: 10
 
       - name: Tests with all features
         run: cargo +${{ matrix.rust_version }} test --all-features
