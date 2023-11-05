@@ -10,18 +10,29 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup cargo
-      run: cargo install cargo-all-features
+      - name: Lints
+        run: cargo fmt --check
 
-    - name: Build
-      run: cargo build --verbose
+  build:
+    runs-on: ubuntu-latest
 
-    - name: Run tests
-      run: cargo test --verbose
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: cargo build --verbose
+        timeout-minutes: 5
+
+      - name: Check
+        run: cargo check
+
+      - name: Tests with all features
+        run: cargo test --all-features
+        timeout-minutes: 10
+

@@ -1,13 +1,8 @@
+use crate::consts::{RANDOM_BITS, RANDOM_MASK, TSID_EPOCH_MILLIS};
 use crate::tsid::TSID;
 use rand::RngCore;
 use std::ops::Add;
 use std::time::{Duration, SystemTime};
-
-const TIME_BITS: u8 = 42;
-const RANDOM_BITS: u8 = 64 - TIME_BITS;
-const RANDOM_MASK: u64 = 0x003fffff;
-//22 bits
-const TSID_EPOCH_MILLIS: u64 = 1577836800000;
 
 #[derive(Debug)]
 pub struct TsidFactory {
@@ -99,10 +94,10 @@ impl TsidFactory {
         } else {
             self.counter = rng.next_u64();
         }
-        self.counter = self.counter & self.counter_mask;
+        self.counter &= self.counter_mask;
         self.last_time_value = time_millis;
 
-        return time_millis;
+        time_millis
     }
 
     fn get_time_millis_in_tsid_epoch() -> u128 {
@@ -117,7 +112,8 @@ impl TsidFactory {
 
 #[cfg(test)]
 mod tests {
-    use crate::factory::{TsidFactory, TIME_BITS};
+    use crate::consts::TIME_BITS;
+    use crate::factory::TsidFactory;
     use crate::TSID;
     use std::collections::HashSet;
     use std::time::{Duration, Instant};

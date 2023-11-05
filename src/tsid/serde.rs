@@ -81,3 +81,18 @@ impl TSIDVisitor {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::TSID;
+
+    #[test]
+    #[cfg(feature = "serde")]
+    fn serialize_to_human_readable_form() {
+        let id1 = TSID::new(496830748901259172);
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&id1).expect("Unable to serialize")
+        )
+    }
+}

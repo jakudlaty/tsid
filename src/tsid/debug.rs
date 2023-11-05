@@ -4,7 +4,7 @@ use std::fmt::{Debug, Formatter};
 #[cfg(feature = "debug")]
 impl Debug for TSID {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str(format!("TSID:{}", self.to_string()).as_str())
+        f.write_str(format!("TSID:{}", self).as_str())
     }
 }
 
