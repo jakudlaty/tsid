@@ -1,9 +1,8 @@
+use crate::consts::{RANDOM_BITS, RANDOM_MASK, TSID_EPOCH_MILLIS};
 use crate::tsid::TSID;
 use rand::RngCore;
 use std::ops::Add;
 use std::time::{Duration, SystemTime};
-use crate::consts::{RANDOM_BITS, RANDOM_MASK, TSID_EPOCH_MILLIS};
-
 
 #[derive(Debug)]
 pub struct TsidFactory {
@@ -113,11 +112,11 @@ impl TsidFactory {
 
 #[cfg(test)]
 mod tests {
-    use crate::factory::{TsidFactory};
+    use crate::consts::TIME_BITS;
+    use crate::factory::TsidFactory;
     use crate::TSID;
     use std::collections::HashSet;
     use std::time::{Duration, Instant};
-    use crate::consts::TIME_BITS;
 
     #[test]
     fn builder_should_set_all_masks_for_8node_bits_version() {

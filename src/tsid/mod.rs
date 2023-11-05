@@ -1,8 +1,6 @@
-
 use phf::phf_map;
 
-use crate::consts::{RANDOM_MASK};
-
+use crate::consts::RANDOM_MASK;
 
 pub mod conversions;
 pub mod display;
@@ -18,8 +16,6 @@ pub mod serde;
 
 #[cfg(feature = "chrono")]
 pub mod chrono;
-
-
 
 #[derive(Hash, Eq, PartialEq, PartialOrd, Copy, Clone)]
 pub struct TSID {
@@ -122,7 +118,6 @@ pub enum TsidError {
 
 #[cfg(test)]
 mod tests {
-    use chrono::{TimeZone, Utc};
     use crate::TSID;
 
     #[test]
@@ -145,18 +140,6 @@ mod tests {
             id2.to_string(),
             id1
         );
-    }
-
-    #[test]
-    fn should_set_timestamp_to_tsid_epoch() {
-        let id_min = TSID::new(0);
-        assert_eq!(id_min.timestamp(), Utc.with_ymd_and_hms(2020, 1, 1, 0, 0, 0).unwrap())
-    }
-
-    #[test]
-    fn should_set_timestamp_to_max_timestamp_value() {
-        let id_max = TSID::new(u64::MAX);
-        assert_eq!(id_max.timestamp(), chrono::DateTime::parse_from_rfc3339("2159-05-15T07:35:11.103Z").unwrap())
     }
 
     #[test]

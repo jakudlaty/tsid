@@ -1,4 +1,4 @@
-pub (crate) mod consts;
+pub(crate) mod consts;
 mod factory;
 mod tsid;
 
