@@ -47,7 +47,7 @@ jobs:
 
 
       - name: Cache cargo
-        id: cache-primes
+        id: cache-restore
         uses: actions/cache/restore@v3
         with:
           path: ~/.cargo/registry/
@@ -62,7 +62,7 @@ jobs:
         timeout-minutes: 10
 
       - name: Cache cargo store
-        id: cache-primes
+        id: cache-save
         uses: actions/cache/save@v3
         if: github.ref == 'refs/heads/master'
         with:
