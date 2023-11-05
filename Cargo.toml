@@ -8,6 +8,7 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jakudlaty/tsid/"
 description = "A Rust library for generating Time-Sorted Unique Identifiers"
+rust-version = "1.67.1"
 
 [dependencies]
 rand = "0.8"
@@ -18,7 +19,7 @@ phf = { version = "0.11.2", features = ["macros"] }
 chrono = { version = "0.4", optional = true }
 
 [dev-dependencies]
-criterion = "0.5.1"
+criterion = ">=0.4"
 serde_json = { version = "1" }
 bson = "2.7.0"
 
