@@ -1,4 +1,8 @@
+use std::ops::Add;
 use phf::phf_map;
+
+use crate::consts::{RANDOM_MASK};
+
 
 pub mod conversions;
 pub mod display;
@@ -11,6 +15,11 @@ pub mod bson;
 
 #[cfg(feature = "serde")]
 pub mod serde;
+
+#[cfg(feature = "chrono")]
+pub mod chrono;
+
+
 
 #[derive(Hash, Eq, PartialEq, PartialOrd, Copy, Clone)]
 pub struct TSID {
@@ -90,8 +99,14 @@ impl TSID {
         Self { number }
     }
 
+    /// Returns numeric representation of TSID
     pub fn number(&self) -> u64 {
         self.number
+    }
+
+    //Returns a random part (node bits and random bits)
+    pub fn random_part(&self) -> u64 {
+        self.number & RANDOM_MASK
     }
 }
 
@@ -105,36 +120,9 @@ pub enum TsidError {
     ParseError(ParseErrorReason),
 }
 
-impl TryFrom<&str> for TSID {
-    type Error = TsidError;
-
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        if value.len() != 13 {
-            return Err(TsidError::ParseError(ParseErrorReason::InvalidLength));
-        }
-        let chars = value.as_bytes();
-
-        let mut number = 0u64;
-        number |= REVERSE[&chars[0x00]] << 60;
-        number |= REVERSE[&chars[0x01]] << 55;
-        number |= REVERSE[&chars[0x02]] << 50;
-        number |= REVERSE[&chars[0x03]] << 45;
-        number |= REVERSE[&chars[0x04]] << 40;
-        number |= REVERSE[&chars[0x05]] << 35;
-        number |= REVERSE[&chars[0x06]] << 30;
-        number |= REVERSE[&chars[0x07]] << 25;
-        number |= REVERSE[&chars[0x08]] << 20;
-        number |= REVERSE[&chars[0x09]] << 15;
-        number |= REVERSE[&chars[0x0a]] << 10;
-        number |= REVERSE[&chars[0x0b]] << 5;
-        number |= REVERSE[&chars[0x0c]];
-
-        return Ok(TSID::new(number));
-    }
-}
-
 #[cfg(test)]
 mod tests {
+    use chrono::{TimeZone, Utc};
     use crate::TSID;
 
     #[test]
@@ -160,26 +148,15 @@ mod tests {
     }
 
     #[test]
-    fn string_representations_should_be_also_ordered() {
-        let id1 = TSID::new(9);
-        let id2 = TSID::new(10);
-
-        assert!(
-            id1.to_string() < id2.to_string(),
-            "Id2:{} should be greater than Id1:{} because it was created later",
-            id2.to_string(),
-            id1
-        );
+    fn should_set_timestamp_to_tsid_epoch() {
+        let id_min = TSID::new(0);
+        assert_eq!(id_min.timestamp(), Utc.with_ymd_and_hms(2020, 1, 1, 0, 0, 0).unwrap())
     }
 
     #[test]
-    #[cfg(feature = "serde")]
-    fn serialize_to_human_readable_form() {
-        let id1 = TSID::new(496830748901259172);
-        println!(
-            "{}",
-            serde_json::to_string_pretty(&id1).expect("Unable to serialize")
-        )
+    fn should_set_timestamp_to_max_timestamp_value() {
+        let id_max = TSID::new(u64::MAX);
+        assert_eq!(id_max.timestamp(), chrono::DateTime::parse_from_rfc3339("2159-05-15T07:35:11.103Z").unwrap())
     }
 
     #[test]
