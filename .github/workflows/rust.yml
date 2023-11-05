@@ -18,6 +18,7 @@ jobs:
 
       - name: Lints
         run: cargo fmt --check
+
   build:
     runs-on: ubuntu-latest
 
@@ -26,9 +27,12 @@ jobs:
 
       - name: Build
         run: cargo build --verbose
+        timeout-minutes: 5
 
       - name: Check
         run: cargo check
 
-      - name: Check with all features
+      - name: Tests with all features
         run: cargo test --all-features
+        timeout-minutes: 10
+
