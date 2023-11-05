@@ -7,6 +7,7 @@ keywords = ["tsid", "sortable", "identifier", "generator"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jakudlaty/tsid/"
+documentation = "https://docs.rs/tsid/"
 description = "A Rust library for generating Time-Sorted Unique Identifiers"
 rust-version = "1.67.1"
 
