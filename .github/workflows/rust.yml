@@ -64,7 +64,7 @@ jobs:
       - name: Cache cargo store
         id: cache-save
         uses: actions/cache/save@v3
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         with:
           path: ~/.cargo/registry/
           key: cargo-registry-${{ matrix.rust_version }}
