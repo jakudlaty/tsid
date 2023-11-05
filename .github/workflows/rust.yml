@@ -33,6 +33,6 @@ jobs:
         run: cargo check
 
       - name: Tests with all features
-        run: cargo +1.67.2 test --all-features
+        run: cargo +1.67.1 test --all-features
         timeout-minutes: 10
 
