@@ -44,6 +44,8 @@ jobs:
         with:
           path: ~/.cargo/registry/src
           key: cargo-registry-${{ matrix.rust_version }}
+          restore-keys: |
+            cargo-registry-${{ matrix.rust_version }}
 
       - name: Install rust toolchain ${{ matrix.rust_version }}
         uses: dtolnay/rust-toolchain@v1
