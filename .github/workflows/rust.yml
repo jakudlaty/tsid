@@ -41,14 +41,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rust_version: ["1.67.1", "1.68.2", "1.71"]
+        rust_version: ["1.67.1", "1.70.1"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install rust ${{ matrix.rust_version }}
-        run: rustup toolchain install ${{ matrix.rust_version }}
-        timeout-minutes: 10
+      - name: Install latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust_version }}
+          override: true
 
 
       - name: Tests with all features
