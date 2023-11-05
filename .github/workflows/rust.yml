@@ -45,5 +45,8 @@ jobs:
     needs: build
 
     steps:
+      - name: Setup cargo-msrv
+        run: cargo install cargo-msrv
+
       - name: Run MSRV checks
         run: cargo msrv verify -- cargo check --all-features
