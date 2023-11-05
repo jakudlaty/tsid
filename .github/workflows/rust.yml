@@ -44,11 +44,13 @@ jobs:
       - name: Set rust toolchain ${{ matrix.rust_version }}
         run: rustup default ${{ matrix.rust_version }}
 
+
+
       - name: Cache cargo
         id: cache-primes
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
-          path: ~/.cargo/registry/cache
+          path: ~/.cargo/registry/
           key: cargo-registry-${{ matrix.rust_version }}
 
       - name: Check
@@ -58,3 +60,11 @@ jobs:
       - name: Tests with all features
         run: cargo +${{ matrix.rust_version }} test --all-features
         timeout-minutes: 10
+
+      - name: Cache cargo store
+        id: cache-primes
+        uses: actions/cache/save@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          path: ~/.cargo/registry/
+          key: cargo-registry-${{ matrix.rust_version }}
