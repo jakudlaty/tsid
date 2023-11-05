@@ -29,10 +29,23 @@ jobs:
         run: cargo build --verbose
         timeout-minutes: 5
 
+  msrv:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust_version: ["1.67.1", "nightly", "stable"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install rust toolchain ${{ matrix.rust_version }}
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust_version }}
+
       - name: Check
-        run: cargo check
+        run: cargo +${{ matrix.rust_version }} check
 
       - name: Tests with all features
-        run: cargo test --all-features
+        run: cargo +${{ matrix.rust_version }} test --all-features
         timeout-minutes: 10
-

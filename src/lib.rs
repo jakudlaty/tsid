@@ -6,5 +6,5 @@ mod creator;
 
 pub use creator::*;
 
+pub use crate::tsid::TSID;
 pub use factory::TsidFactory;
-pub use tsid::TSID;
