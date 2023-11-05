@@ -19,7 +19,6 @@ phf = { version = "0.11.2", features = ["macros"] }
 chrono = { version = "0.4", optional = true }
 
 [dev-dependencies]
-criterion = "0.4.0"
 serde_json = { version = "1" }
 bson = "2.7.0"
 
@@ -29,14 +28,9 @@ debug = []
 bson_as_string = ["bson"]
 serde_as_string = ["serde"]
 
-
 [package.metadata.release]
 allow-branch = ["main"]
-
 
 [package.metadata]
 msrv = "1.67.1"
 
-[[bench]]
-name = "benchmarks"
-harness = false
