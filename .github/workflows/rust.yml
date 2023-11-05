@@ -44,8 +44,6 @@ jobs:
       - name: Set rust toolchain ${{ matrix.rust_version }}
         run: rustup default ${{ matrix.rust_version }}
 
-
-
       - name: Cache cargo
         id: cache-restore
         uses: actions/cache/restore@v3
