@@ -48,10 +48,8 @@ jobs:
         id: cache-primes
         uses: actions/cache@v3
         with:
-          path: ~/.cargo/registry/
+          path: ~/.cargo/registry/cache
           key: cargo-registry-${{ matrix.rust_version }}
-          restore-keys: |
-            cargo-registry-${{ matrix.rust_version }}
 
       - name: Check
         run: cargo +${{ matrix.rust_version }} check
