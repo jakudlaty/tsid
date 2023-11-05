@@ -49,7 +49,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: ~/.cargo/registry/
-          key: cargo-registry-${{ matrix.rust_version }}
+          key: cargo-registry-${{ matrix.rust_version }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Check
         run: cargo +${{ matrix.rust_version }} check
@@ -62,7 +62,7 @@ jobs:
       - name: Cache cargo store
         id: cache-save
         uses: actions/cache/save@v3
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && steps.cache-restore.outputs.cache-hit != 'true'
         with:
           path: ~/.cargo/registry/
-          key: cargo-registry-${{ matrix.rust_version }}
+          key: cargo-registry-${{ matrix.rust_version }}-${{ hashFiles('**/Cargo.lock') }}
