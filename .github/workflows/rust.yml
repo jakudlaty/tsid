@@ -27,15 +27,8 @@ jobs:
       - name: Build
         run: cargo build --verbose
 
-  checks:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - uses: actions/checkout@v4
-
       - name: Check
         run: cargo check
 
       - name: Check with all features
-        run: cargo check --all-features
+        run: cargo test --all-features
