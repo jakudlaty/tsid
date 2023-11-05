@@ -47,8 +47,9 @@ jobs:
       - name: Cache cargo
         id: cache-primes
         uses: actions/cache@v3
+        if: github.ref == 'refs/heads/master'
         with:
-          path: ~/.cargo/registry/cache
+          path: ~/.cargo/registry/
           key: cargo-registry-${{ matrix.rust_version }}
           restore-keys: |
             cargo-registry-${{ matrix.rust_version }}
