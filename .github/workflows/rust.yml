@@ -17,6 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Build
+      run: cargo fmt --check
+
     - name: Setup cargo
       run: cargo install cargo-all-features
 
@@ -24,4 +27,7 @@ jobs:
       run: cargo build --verbose
 
     - name: Run tests
-      run: cargo test --verbose
+      run: cargo test-all-features
+
+    - name: Run MSRV checks
+      run: cargo msrv verify -- cargo check --all-features
