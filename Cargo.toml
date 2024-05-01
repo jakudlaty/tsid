@@ -13,7 +13,7 @@ rust-version = "1.67.1"
 
 [dependencies]
 rand = "0.8"
-serde = { version = "1", optional = true }
+serde = { version = "1.0.200", optional = true }
 bson = { version = "2", optional = true }
 lazy_static = "1.4.0"
 phf = { version = "0.11.2", features = ["macros"] }
