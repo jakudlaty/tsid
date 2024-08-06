@@ -136,7 +136,6 @@ mod tests {
     #[test]
     fn builder_should_set_all_masks_for_0node_bits_version() {
         let factory_under_test = TsidFactory::with_node_bits(0, 0);
-        println!("{:?}", factory_under_test);
 
         assert_eq!(0, factory_under_test.node_bits);
         assert_eq!(22, factory_under_test.counter_bits);
@@ -193,6 +192,27 @@ mod tests {
 
     #[test]
     fn timer_should_be_incremental() {
+        let mut factory_under_test = TsidFactory::with_node_bits(8, 0);
+        let mut max_sample_count = 100000;
+        let max_duration = Duration::from_millis(100);
+        let mut last = factory_under_test.get_time_and_advance_counter();
+
+        let start = Instant::now();
+        while max_sample_count > 0 && start.elapsed() < max_duration {
+            let next = factory_under_test.get_time_and_advance_counter();
+            assert!(
+                last <= next,
+                "Timer implementation is non monotonic {}, {}",
+                last,
+                next
+            );
+            last = next;
+            max_sample_count -= 1;
+        }
+    }
+
+    #[test]
+    fn example_tsids() {
         let mut factory_under_test = TsidFactory::with_node_bits(8, 0);
         let mut max_sample_count = 100000;
         let max_duration = Duration::from_millis(100);
