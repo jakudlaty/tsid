@@ -148,4 +148,10 @@ mod tests {
         let id1 = TSID::new(496830748901259172);
         println!("{}", bson::doc! {"id": id1 })
     }
+
+    #[test]
+    fn test_regression_panic_try_from_str() {
+        // Was panicking at src/tsid/conversions.rs: invalid key
+        assert!(TSID::try_from("-------------").is_err());
+    }
 }
