@@ -1,4 +1,4 @@
-use crate::tsid::{ParseErrorReason, TsidError, REVERSE, TSID, ALPHABET};
+use crate::tsid::{ParseErrorReason, TsidError, ALPHABET, REVERSE, TSID};
 
 impl From<TSID> for u64 {
     fn from(val: TSID) -> Self {
