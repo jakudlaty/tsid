@@ -9,7 +9,7 @@ readme = "README.md"
 repository = "https://github.com/jakudlaty/tsid/"
 documentation = "https://docs.rs/tsid/"
 description = "A Rust library for generating Time-Sorted Unique Identifiers"
-rust-version = "1.67.1"
+rust-version = "1.68.0"
 
 [dependencies]
 rand = "0.8.5"
