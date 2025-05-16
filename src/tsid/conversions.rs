@@ -1,4 +1,4 @@
-use crate::tsid::{ParseErrorReason, TsidError, REVERSE, TSID};
+use crate::tsid::{ParseErrorReason, TsidError, REVERSE, TSID, ALPHABET};
 
 impl From<TSID> for u64 {
     fn from(val: TSID) -> Self {
@@ -28,7 +28,7 @@ impl TryFrom<&str> for TSID {
     type Error = TsidError;
 
     fn try_from(value: &str) -> Result<Self, Self::Error> {
-        if value.len() != 13 {
+        if value.len() != 13 || !value.chars().all(|c| ALPHABET.contains(&c)) {
             return Err(TsidError::ParseError(ParseErrorReason::InvalidLength));
         }
         let chars = value.as_bytes();
