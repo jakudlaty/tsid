@@ -12,7 +12,7 @@ description = "A Rust library for generating Time-Sorted Unique Identifiers"
 rust-version = "1.68.0"
 
 [dependencies]
-rand = "0.8.5"
+rand = "0.9.0"
 getrandom = { version = "0.2", features = ["js"] }
 serde = { version = "1", optional = true }
 bson = { version = "2", optional = true }
