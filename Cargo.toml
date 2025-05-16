@@ -13,7 +13,7 @@ rust-version = "1.68.0"
 
 [dependencies]
 rand = "0.8.5"
-getrandom = { version = "0.2", features = ["js"] }
+getrandom = { version = "0.3", features = ["js"] }
 serde = { version = "1", optional = true }
 bson = { version = "2", optional = true }
 lazy_static = "1.4.0"
