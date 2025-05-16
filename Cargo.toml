@@ -29,10 +29,10 @@ default = ["debug", "chrono"]
 debug = []
 bson_as_string = ["bson"]
 serde_as_string = ["serde"]
+js = []
 
 [package.metadata.release]
 allow-branch = ["main"]
 
 [package.metadata]
-msrv = "1.67.1"
-
+msrv = "1.68"
