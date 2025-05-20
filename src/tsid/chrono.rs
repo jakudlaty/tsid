@@ -37,7 +37,7 @@ mod tests {
     fn test_tsid_max_256() {
         test_tsid_max(20000, 16384, 8);
     }
-    
+
     #[test]
     fn test_tsid_max_1024() {
         test_tsid_max(10000, 4096, 10);
@@ -47,7 +47,6 @@ mod tests {
     fn test_tsid_max_4096() {
         test_tsid_max(10000, 1024, 12);
     }
-
 
     fn test_tsid_max(max_loop: usize, max_tsid: usize, node_bits: u8) {
         let mut list = Vec::with_capacity(max_loop);

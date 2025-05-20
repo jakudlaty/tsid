@@ -22,7 +22,7 @@ impl TryFrom<&str> for TSID {
         if !value.as_bytes().iter().all(|c| REVERSE.contains_key(&c)) {
             return Err(TsidError::ParseError(ParseErrorReason::InvalidCharacters));
         }
-        
+
         let chars = value.as_bytes();
 
         let mut number = 0u64;
@@ -88,7 +88,7 @@ mod tests {
 
         // Letter validation
         assert!(TSID::try_from("0123456789ABi").is_ok()); // Letter I
-        assert!(TSID::try_from("0123456789ABl").is_ok()); // Letter L  
+        assert!(TSID::try_from("0123456789ABl").is_ok()); // Letter L
         assert!(TSID::try_from("0123456789ABo").is_ok()); // Letter O
         assert!(TSID::try_from("0123456789ABu").is_err()); // Letter U not allowed
 
@@ -103,4 +103,3 @@ mod tests {
         }
     }
 }
-

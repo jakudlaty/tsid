@@ -109,7 +109,7 @@ impl TSID {
 #[derive(Debug)]
 pub enum ParseErrorReason {
     InvalidLength,
-    InvalidCharacters
+    InvalidCharacters,
 }
 
 #[derive(Debug)]
@@ -155,6 +155,4 @@ mod tests {
         // Was panicking at src/tsid/conversions.rs: invalid key
         assert!(TSID::try_from("-------------").is_err());
     }
-
-
 }
