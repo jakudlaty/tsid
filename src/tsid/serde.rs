@@ -2,6 +2,7 @@ use crate::tsid::{ParseErrorReason, TsidError};
 use crate::TSID;
 use serde::{de::Error, de::Visitor, Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::Formatter;
+use serde::de::Unexpected;
 
 impl Serialize for TSID {
     #[cfg(feature = "serde_as_string")]
@@ -76,6 +77,9 @@ impl TSIDVisitor {
             Err(e) => match e {
                 TsidError::ParseError(ParseErrorReason::InvalidLength) => {
                     Err(Error::invalid_length(v.len(), &"13"))
+                },
+                TsidError::ParseError(ParseErrorReason::InvalidCharacters) => {
+                    Err(Error::invalid_value(Unexpected::Other(v), &"a string representation of TSID"))
                 }
             },
         }
