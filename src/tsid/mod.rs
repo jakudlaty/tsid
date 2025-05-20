@@ -109,6 +109,7 @@ impl TSID {
 #[derive(Debug)]
 pub enum ParseErrorReason {
     InvalidLength,
+    InvalidCharacters,
 }
 
 #[derive(Debug)]

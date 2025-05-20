@@ -5,7 +5,7 @@ TSID generator for rust, this library is reimplementation of java [tsid-creator]
 
 Implementation status:
 - [x] Generate TSID with simple, naive implementation
-- [ ] Add basic tests to check compatibility
+- [x] Add basic tests to check compatibility
 - [ ] Benchmarks (compare the speed to java library)
 - [x] Publish first usable version to crates.io
 - [x] GitHub actions workflow to CI
