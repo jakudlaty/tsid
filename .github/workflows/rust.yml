@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Lints
         run: cargo fmt --check
@@ -26,7 +26,7 @@ jobs:
         rust_target: ["wasm32-unknown-unknown", "x86_64-unknown-linux-gnu"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install rust target ${{ matrix.rust_target }}
         run: rustup target add ${{ matrix.rust_target }}
@@ -42,7 +42,7 @@ jobs:
         rust_version: ["1.68", "nightly", "stable"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install rust toolchain ${{ matrix.rust_version }}
         run: rustup toolchain install ${{ matrix.rust_version }}
