@@ -52,7 +52,7 @@ jobs:
 
       - name: Cache cargo
         id: cache-restore
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ~/.cargo/registry/
           key: cargo-registry-${{ matrix.rust_version }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Cache cargo store
         id: cache-save
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         if: github.ref == 'refs/heads/main' && steps.cache-restore.outputs.cache-hit != 'true'
         with:
           path: ~/.cargo/registry/
